@@ -13,7 +13,8 @@
   • Textos ............................. direto no HTML de cada seção (procure pelos comentários)
   • Foto da Jully na capa .............. fotos/jully-capa.webp (recortada, fundo transparente)
   • Fotos dos serviços ................. pasta fotos/ (WebP)
-  • Logo dourada ....................... img/logo-ouro.webp (capa e rodapé) · img/logo-letreiro.webp (barra)
+  • Logo prateada ...................... img/logo-prata.webp (capa e rodapé) · img/letreiro-prata.webp (barra)
+                                          (as versões douradas continuam em img/logo-ouro.webp e img/logo-letreiro.webp)
   ==========================================================================
 -->
 <html lang="pt-BR">
@@ -46,7 +47,7 @@
 
   <!-- Imagens do primeiro quadro -->
   <link rel="preload" as="image" href="fotos/jully-capa.webp" type="image/webp" fetchpriority="high">
-  <link rel="preload" as="image" href="img/logo-ouro.webp" type="image/webp">
+  <link rel="preload" as="image" href="img/logo-prata.webp" type="image/webp">
 
   <!-- ===== FONTES (Google Fonts) =====
        Títulos e textos: Jost (geométrica, elegante em caixa alta).
@@ -256,7 +257,7 @@
     }
     .hero__grade {
       display: grid;
-      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+      grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
       align-items: end;
       gap: clamp(16px, 2.5vw, 40px);
     }
@@ -284,8 +285,7 @@
     .hero__cena {
       position: relative;
       aspect-ratio: 1.08 / 1;
-      order: -1;
-      margin-left: calc(var(--gutter) * -1);
+      margin-right: calc(var(--gutter) * -1);
       perspective: 1400px;
       --mx: 0; --my: 0; --sy: 0;
     }
@@ -298,49 +298,50 @@
     }
     /* Luz quente de parede atrás do letreiro */
     .hero__luz {
-      position: absolute; left: 22%; top: -4%; width: 86%; height: 72%;
+      position: absolute; left: -8%; top: -4%; width: 86%; height: 72%;
       background: radial-gradient(closest-side, rgba(222, 178, 112, .3), rgba(222, 178, 112, .08) 55%, transparent);
       pointer-events: none;
       --k: .2; --z: -90px; --ks: 70;
     }
     /* Halo quente atrás da Jully: separa o cabelo e o blazer pretos do fundo preto */
     .hero__aura {
-      position: absolute; left: -12%; top: 2%; width: 66%; height: 72%;
+      position: absolute; right: -12%; top: 2%; width: 66%; height: 72%;
       background: radial-gradient(closest-side, rgba(216, 183, 125, .14), rgba(216, 183, 125, .04) 60%, transparent);
       pointer-events: none;
       --k: .4; --z: -60px; --ks: 40;
     }
-    .hero__letreiro { position: absolute; left: 43%; top: 6%; width: 57%; --k: .35; --z: -40px; --ks: 55; }
+    .hero__letreiro { position: absolute; left: 0; top: 6%; width: 57%; --k: .35; --z: -40px; --ks: 55; }
     .hero__letreiro img { width: 100%; filter: drop-shadow(0 6px 18px rgba(0, 0, 0, .45)); }
     /* Brilho que passa uma vez pelas letras (só aparece se o navegador aceitar máscara) */
     .hero__brilho {
       position: absolute; inset: 0; pointer-events: none;
-      -webkit-mask: url(img/logo-ouro.webp) center / 100% 100% no-repeat;
-      mask: url(img/logo-ouro.webp) center / 100% 100% no-repeat;
-      background: linear-gradient(100deg, transparent 38%, rgba(255, 244, 214, .9) 50%, transparent 62%) 130% 0 / 260% 100% no-repeat;
+      -webkit-mask: url(img/logo-prata.webp) center / 100% 100% no-repeat;
+      mask: url(img/logo-prata.webp) center / 100% 100% no-repeat;
+      background: linear-gradient(100deg, transparent 38%, rgba(255, 255, 255, .9) 50%, transparent 62%) 130% 0 / 260% 100% no-repeat;
       opacity: 0;
     }
     /* A Jully passa da borda de baixo da capa e some só no fim, atrás da faixa */
-    /* A Jully fica à esquerda, sem espelhar: na foto ela vira o rosto para a direita,
-       então olha para dentro da página (letreiro e texto). Passa da borda esquerda e da de baixo. */
-    .hero__jully { position: absolute; left: -24%; top: 0; width: 72%; --fade-ini: 74%; --fade-fim: 90%; --k: .7; --z: 0px; --ks: 15; }
+    /* A Jully fica à direita e ESPELHADA: na foto original ela vira o rosto para a direita,
+       então espelhada ela olha para dentro da página (letreiro e texto). Passa da borda direita e da de baixo. */
+    .hero__jully { position: absolute; right: -24%; top: 0; width: 72%; --fade-ini: 74%; --fade-fim: 90%; --k: .7; --z: 0px; --ks: 15; }
     .hero__jully img {
       width: 100%;
+      transform: scaleX(-1);
       -webkit-mask-image: linear-gradient(180deg, #000 var(--fade-ini), transparent var(--fade-fim));
       mask-image: linear-gradient(180deg, #000 var(--fade-ini), transparent var(--fade-fim));
     }
     /* Cartões flutuantes com trabalhos reais, à frente da Jully */
     .hero__card { position: absolute; width: 21%; transform-style: preserve-3d; }
-    .hero__card--a { right: 3%; bottom: 14%; --k: 1.2; --z: 90px; --ks: -80; }
-    .hero__card--b { right: 31%; bottom: 17%; width: 15%; --k: 1.5; --z: 130px; --ks: -130; }
+    .hero__card--a { left: 3%; bottom: 14%; --k: 1.2; --z: 90px; --ks: -80; }
+    .hero__card--b { left: 31%; bottom: 17%; width: 15%; --k: 1.5; --z: 130px; --ks: -130; }
     .hero__card-in {
       position: relative; aspect-ratio: 4 / 5; overflow: hidden;
       border: 1px solid var(--fio-forte); border-radius: 16px;
       box-shadow: 0 34px 50px -24px rgba(0, 0, 0, .9);
       transform: rotateY(var(--ry)) rotateX(var(--rx)) rotateZ(var(--rz));
     }
-    .hero__card--a .hero__card-in { --ry: -20deg; --rx: 6deg; --rz: 4deg; }
-    .hero__card--b .hero__card-in { --ry: 18deg; --rx: 8deg; --rz: -5deg; }
+    .hero__card--a .hero__card-in { --ry: 20deg; --rx: 6deg; --rz: -4deg; }
+    .hero__card--b .hero__card-in { --ry: -18deg; --rx: 8deg; --rz: 5deg; }
     .hero__card img { width: 100%; height: 100%; object-fit: cover; }
     .foco-alto { object-position: 50% 20%; }
     .hero__card figcaption {
@@ -418,28 +419,26 @@
     .servico .link-seta { margin-top: auto; padding-top: 18px; background-position: left calc(100% - 0px); }
     .servicos__mais { margin-top: 36px; text-align: center; }
 
-    /* ---------- 6.2 Sobre: frase da Jully + promessas ---------- */
-    .sobre__painel { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); border-radius: var(--raio-g); overflow: hidden; }
-    .sobre__frase { position: relative; padding: clamp(32px, 4vw, 56px); }
-    .sobre__aspas { display: block; width: 40px; height: 32px; color: var(--ouro); margin-bottom: 18px; }
-    .sobre__frase blockquote p { font-size: clamp(1.1875rem, 1rem + .6vw, 1.4375rem); font-weight: 300; line-height: 1.5; }
-    .sobre__frase blockquote p + p { margin-top: 6px; color: var(--ouro); }
-    .sobre__bio { margin-top: 20px; font-size: .9375rem; color: var(--texto-2); max-width: 30rem; }
-    .sobre__assinatura { display: flex; align-items: center; gap: 14px; margin-top: 18px; }
-    .sobre__assinatura::before { content: ""; width: 28px; height: 1px; background: var(--ouro); }
-    .sobre__assinatura .script { font-size: 2.5rem; line-height: 1; }
-    .promessas { display: grid; grid-template-rows: repeat(3, 1fr); border-left: 1px solid var(--fio-neutro); }
-    .promessa {
-      display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); align-items: center; gap: 24px;
-      padding: clamp(22px, 2.4vw, 32px) clamp(24px, 3.5vw, 52px);
+    /* ---------- 6.2 Sobre: frase curta da Jully + promessas (editorial, centralizado) ---------- */
+    .sobre__painel { display: grid; grid-template-columns: 1fr; border-radius: var(--raio-g); overflow: hidden; text-align: center; }
+    .sobre__frase { padding: clamp(44px, 6vw, 84px) clamp(24px, 5vw, 64px) clamp(36px, 4.5vw, 56px); }
+    .sobre__aspas { display: block; width: 30px; height: 24px; margin: 0 auto 26px; color: var(--ouro); }
+    .sobre__frase blockquote p {
+      max-width: 20ch; margin-inline: auto;
+      font-size: clamp(1.75rem, 1.1rem + 2.2vw, 3rem); font-weight: 300; line-height: 1.18; letter-spacing: .005em;
+      text-wrap: balance;
     }
-    .promessa + .promessa { border-top: 1px solid var(--fio-neutro); }
+    .sobre__assinatura { display: flex; flex-direction: column; align-items: center; gap: 10px; margin-top: 30px; }
+    .sobre__assinatura::before { content: ""; width: 36px; height: 1px; margin-bottom: 8px; background: var(--fio-forte); }
+    .sobre__assinatura .script { font-size: 2.5rem; line-height: 1; }
+    .promessas { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--fio-neutro); }
+    .promessa { display: flex; flex-direction: column; align-items: center; gap: 10px; padding: clamp(24px, 3vw, 38px) 20px; }
+    .promessa + .promessa { border-left: 1px solid var(--fio-neutro); }
     .promessa strong {
-      display: block;
-      font-size: clamp(2rem, 1.2rem + 2vw, 3.125rem); font-weight: 300; line-height: 1; letter-spacing: .01em;
+      font-size: clamp(1.625rem, 1.1rem + 1.3vw, 2.375rem); font-weight: 300; line-height: 1; letter-spacing: .01em;
       color: var(--ouro); white-space: nowrap;
     }
-    .promessa span { display: block; font-size: .9375rem; line-height: 1.5; color: var(--texto-2); }
+    .promessa span { font-size: .75rem; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; line-height: 1.5; color: var(--texto-3); }
 
     /* ---------- 6.3 Para você se… ---------- */
     .para-voce__lista { display: grid; grid-template-columns: repeat(4, 1fr); gap: clamp(20px, 3vw, 40px); max-width: 1080px; margin-inline: auto; }
@@ -668,8 +667,6 @@
     @media (max-width: 1100px) {
       .servicos__lista { grid-template-columns: repeat(2, 1fr); }
       .servico__foto { aspect-ratio: 16 / 11; }
-      .sobre__painel { grid-template-columns: 1fr; }
-      .promessas { border-left: 0; border-top: 1px solid var(--fio-neutro); }
       .para-voce__lista { grid-template-columns: repeat(2, 1fr); gap: 32px 40px; }
       .rodape__grade { grid-template-columns: 1fr 1fr; }
       .final__extras { grid-template-columns: 1fr; gap: 14px; }
@@ -704,11 +701,11 @@
       .hero { padding-top: var(--topo-h); }
       .hero__grade { grid-template-columns: 1fr; gap: 0; }
       .hero__cena { order: -1; margin-inline: calc(var(--gutter) * -1); aspect-ratio: 1 / .9; max-height: 560px; overflow: hidden; }
-      .hero__letreiro { left: 42%; top: 7%; width: 55%; }
-      .hero__luz { left: 8%; top: -6%; width: 100%; height: 70%; }
-      .hero__jully { left: -24%; top: 3%; width: 70%; --fade-ini: 62%; --fade-fim: 84%; }
-      .hero__aura { left: -14%; width: 80%; }
-      .hero__card--a { right: 5%; bottom: 11%; width: 21%; --z: 40px; }
+      .hero__letreiro { left: 3%; top: 7%; width: 55%; }
+      .hero__luz { left: -10%; top: -6%; width: 100%; height: 70%; }
+      .hero__jully { right: -24%; top: 3%; width: 70%; --fade-ini: 62%; --fade-fim: 84%; }
+      .hero__aura { right: -14%; width: 80%; }
+      .hero__card--a { left: 5%; bottom: 11%; width: 21%; --z: 40px; }
       .hero__card--b { display: none; }
       .hero__card figcaption { left: 5px; right: 5px; bottom: 5px; padding: 4px 5px; font-size: .625rem; letter-spacing: .08em; }
       .hero__texto { padding-block: 0 36px; }
@@ -727,7 +724,9 @@
     @media (max-width: 600px) {
       .servicos__lista { grid-template-columns: 1fr; }
       .servico__foto { aspect-ratio: 4 / 3; }
-      .promessa { grid-template-columns: 1fr; gap: 8px; padding: 22px 24px; }
+      .promessas { grid-template-columns: 1fr; }
+      .promessa + .promessa { border-left: 0; border-top: 1px solid var(--fio-neutro); }
+      .promessa { padding: 22px 24px; }
       .promessa strong { font-size: 1.875rem; }
       .para-voce__lista { grid-template-columns: 1fr; gap: 22px; }
       .incluso__lista { grid-template-columns: 1fr; gap: 24px; }
@@ -785,7 +784,7 @@
   <header class="topo">
     <div class="topo__interna container">
       <a class="topo__marca" href="#inicio" aria-label="Studio Jully Catão, voltar ao início">
-        <img src="img/logo-letreiro.webp" width="520" height="152" alt="">
+        <img src="img/letreiro-prata.webp" width="520" height="152" alt="">
       </a>
       <button class="topo__menu" type="button" aria-expanded="false" aria-controls="menu" aria-label="Abrir menu">
         <span></span><span></span>
@@ -837,7 +836,7 @@
               <div class="hero__luz camada-3d" aria-hidden="true"></div>
               <div class="hero__aura camada-3d" aria-hidden="true"></div>
               <div class="hero__letreiro camada-3d" aria-hidden="true">
-                <img src="img/logo-ouro.webp" width="1520" height="764" alt="" fetchpriority="high">
+                <img src="img/logo-prata.webp" width="1520" height="764" alt="" fetchpriority="high">
                 <span class="hero__brilho"></span>
               </div>
               <figure class="hero__jully camada-3d">
@@ -941,8 +940,8 @@
     </section>
 
     <!-- ===================================================================
-         3. SOBRE — frase da Jully + três promessas (sem números, a pedido)
-         REVISAR O TEXTO COM A JULIANE.
+         3. SOBRE — frase curta da Jully + três promessas (sem números, a pedido)
+         Versão resumida e editorial (pedido do cliente: "mais chique, mais resumida").
          =================================================================== -->
     <section class="secao" id="sobre" aria-label="Sobre a Juliane Catão" style="padding-top:0">
       <div class="container">
@@ -950,16 +949,17 @@
           <figure class="sobre__frase">
             <svg class="sobre__aspas" aria-hidden="true"><use href="#i-aspas"/></svg>
             <blockquote>
-              <p>Cada cliente que senta na minha cadeira sai com mais do que um cabelo bonito.</p>
-              <p>Sai com a autoestima lá em cima.</p>
+              <p>Mais que um cabelo bonito: <span class="ouro">autoestima.</span></p>
             </blockquote>
-            <p class="sobre__bio">Sou a Juliane Catão, cabeleireira apaixonada por transformação. Meu atendimento é exclusivo: do diagnóstico ao finalizado, seu horário é só seu.</p>
-            <figcaption class="sobre__assinatura"><span class="script">Juliane Catão</span></figcaption>
+            <figcaption class="sobre__assinatura">
+              <span class="script">Juliane Catão</span>
+              <span class="legenda">Hairstylist · Lauro de Freitas</span>
+            </figcaption>
           </figure>
           <ul class="promessas" aria-label="O que você pode esperar">
-            <li class="promessa"><strong>Diagnóstico</strong><span>Seu fio é avaliado antes de qualquer química</span></li>
-            <li class="promessa"><strong>Sob medida</strong><span>Cor pensada para o seu tom e o seu estilo</span></li>
-            <li class="promessa"><strong>Brilho real</strong><span>Brilho de verdade, cuidando da saúde do fio</span></li>
+            <li class="promessa"><strong>Diagnóstico</strong><span>antes de qualquer química</span></li>
+            <li class="promessa"><strong>Sob medida</strong><span>para o seu tom e estilo</span></li>
+            <li class="promessa"><strong>Brilho real</strong><span>com saúde do fio</span></li>
           </ul>
         </div>
       </div>
@@ -991,7 +991,7 @@
               <div class="camada"><span>Diagnóstico</span><svg class="icone"><use href="#i-gota"/></svg></div>
               <div class="camada"><span>Cor sob medida</span><svg class="icone"><use href="#i-sol"/></svg></div>
               <div class="camada"><span>Tratamento</span><svg class="icone"><use href="#i-escudo"/></svg></div>
-              <div class="camada"><span>Finalização</span><img src="img/logo-letreiro.webp" width="520" height="152" alt="" loading="lazy" decoding="async"></div>
+              <div class="camada"><span>Finalização</span><img src="img/letreiro-prata.webp" width="520" height="152" alt="" loading="lazy" decoding="async"></div>
             </div>
             <p class="camadas__dica legenda">Toque num cartão para trazer para cima</p>
           </div>
@@ -1139,7 +1139,7 @@
       <div class="rodape__grade">
         <div>
           <a class="rodape__logo" href="#inicio" aria-label="Studio Jully Catão, voltar ao início">
-            <img src="img/logo-ouro.webp" width="1520" height="764" loading="lazy" decoding="async" alt="">
+            <img src="img/logo-prata.webp" width="1520" height="764" loading="lazy" decoding="async" alt="">
           </a>
           <p class="rodape__frase">Transformação, brilho e atendimento exclusivo com hora marcada.</p>
           <div class="rodape__sociais">
