@@ -86,7 +86,10 @@
       --gutter: clamp(20px, 4vw, 48px);
       --secao: clamp(72px, 8vw, 112px);
       --topo-h: 84px;
-      --raio: 4px;
+      --raio: 20px;               /* cartões e painéis */
+      --raio-g: 28px;             /* painéis grandes */
+      --raio-p: 12px;             /* detalhes pequenos */
+      --raio-pilula: 999px;       /* botões */
 
       --ease-out: cubic-bezier(.16, 1, .3, 1);
     }
@@ -124,14 +127,14 @@
     ul, ol { padding: 0; list-style: none; }
     a { color: inherit; text-decoration: none; }
     a, button, summary { -webkit-tap-highlight-color: transparent; }
-    :focus-visible { outline: 2px solid var(--ouro-claro); outline-offset: 3px; border-radius: 2px; }
+    :focus-visible { outline: 2px solid var(--ouro-claro); outline-offset: 3px; border-radius: 10px; }
     button { font: inherit; color: inherit; }
     svg { flex-shrink: 0; }
 
     .container { width: 100%; max-width: calc(var(--container) + var(--gutter) * 2); margin-inline: auto; padding-inline: var(--gutter); }
     .sprite { position: absolute; width: 0; height: 0; overflow: hidden; }
     .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
-    .pular { position: absolute; left: 16px; top: -60px; z-index: 100; background: var(--ouro); color: var(--sobre-ouro); padding: 10px 16px; border-radius: var(--raio); font-weight: 500; }
+    .pular { position: absolute; left: 16px; top: -60px; z-index: 100; background: var(--ouro); color: var(--sobre-ouro); padding: 10px 16px; border-radius: var(--raio-pilula); font-weight: 500; }
     .pular:focus { top: 12px; }
 
     /* Tipografia */
@@ -164,7 +167,7 @@
       display: inline-flex; align-items: center; justify-content: center; gap: 12px;
       min-height: var(--altura);
       padding: 0 34px;
-      border: 0; border-radius: 3px;
+      border: 0; border-radius: var(--raio-pilula);
       background: linear-gradient(180deg, var(--ouro-claro) 0%, var(--ouro) 52%, var(--ouro-escuro) 100%);
       color: var(--sobre-ouro);
       font-family: var(--font-sans);
@@ -253,7 +256,7 @@
     }
     .hero__grade {
       display: grid;
-      grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
       align-items: end;
       gap: clamp(16px, 2.5vw, 40px);
     }
@@ -281,7 +284,8 @@
     .hero__cena {
       position: relative;
       aspect-ratio: 1.08 / 1;
-      margin-right: calc(var(--gutter) * -1);
+      order: -1;
+      margin-left: calc(var(--gutter) * -1);
       perspective: 1400px;
       --mx: 0; --my: 0; --sy: 0;
     }
@@ -294,19 +298,19 @@
     }
     /* Luz quente de parede atrás do letreiro */
     .hero__luz {
-      position: absolute; left: -6%; top: -4%; width: 92%; height: 72%;
+      position: absolute; left: 20%; top: -4%; width: 88%; height: 72%;
       background: radial-gradient(closest-side, rgba(222, 178, 112, .3), rgba(222, 178, 112, .08) 55%, transparent);
       pointer-events: none;
       --k: .2; --z: -90px; --ks: 70;
     }
     /* Halo quente atrás da Jully: separa o cabelo e o blazer pretos do fundo preto */
     .hero__aura {
-      position: absolute; right: -10%; top: 2%; width: 66%; height: 72%;
+      position: absolute; left: -10%; top: 2%; width: 66%; height: 72%;
       background: radial-gradient(closest-side, rgba(216, 183, 125, .14), rgba(216, 183, 125, .04) 60%, transparent);
       pointer-events: none;
       --k: .4; --z: -60px; --ks: 40;
     }
-    .hero__letreiro { position: absolute; left: 0; top: 6%; width: 72%; --k: .35; --z: -40px; --ks: 55; }
+    .hero__letreiro { position: absolute; left: 35%; top: 6%; width: 65%; --k: .35; --z: -40px; --ks: 55; }
     .hero__letreiro img { width: 100%; filter: drop-shadow(0 6px 18px rgba(0, 0, 0, .45)); }
     /* Brilho que passa uma vez pelas letras (só aparece se o navegador aceitar máscara) */
     .hero__brilho {
@@ -317,30 +321,32 @@
       opacity: 0;
     }
     /* A Jully passa da borda de baixo da capa e some só no fim, atrás da faixa */
-    .hero__jully { position: absolute; right: -19%; top: 0; width: 80%; --fade-ini: 74%; --fade-fim: 90%; --k: .7; --z: 0px; --ks: 15; }
+    /* foto espelhada: ela fica à esquerda olhando para o texto */
+    .hero__jully { position: absolute; left: -24%; top: 0; width: 80%; --fade-ini: 74%; --fade-fim: 90%; --k: .7; --z: 0px; --ks: 15; }
     .hero__jully img {
       width: 100%;
+      transform: scaleX(-1);
       -webkit-mask-image: linear-gradient(180deg, #000 var(--fade-ini), transparent var(--fade-fim));
       mask-image: linear-gradient(180deg, #000 var(--fade-ini), transparent var(--fade-fim));
     }
     /* Cartões flutuantes com trabalhos reais, à frente da Jully */
     .hero__card { position: absolute; width: 21%; transform-style: preserve-3d; }
-    .hero__card--a { left: 3%; bottom: 14%; --k: 1.2; --z: 90px; --ks: -80; }
-    .hero__card--b { left: 31%; bottom: 17%; width: 15%; --k: 1.5; --z: 130px; --ks: -130; }
+    .hero__card--a { right: 3%; bottom: 14%; --k: 1.2; --z: 90px; --ks: -80; }
+    .hero__card--b { right: 31%; bottom: 17%; width: 15%; --k: 1.5; --z: 130px; --ks: -130; }
     .hero__card-in {
       position: relative; aspect-ratio: 4 / 5; overflow: hidden;
-      border: 1px solid var(--fio-forte); border-radius: 6px;
+      border: 1px solid var(--fio-forte); border-radius: 16px;
       box-shadow: 0 34px 50px -24px rgba(0, 0, 0, .9);
       transform: rotateY(var(--ry)) rotateX(var(--rx)) rotateZ(var(--rz));
     }
-    .hero__card--a .hero__card-in { --ry: 20deg; --rx: 6deg; --rz: -4deg; }
-    .hero__card--b .hero__card-in { --ry: -18deg; --rx: 8deg; --rz: 5deg; }
+    .hero__card--a .hero__card-in { --ry: -20deg; --rx: 6deg; --rz: 4deg; }
+    .hero__card--b .hero__card-in { --ry: 18deg; --rx: 8deg; --rz: -5deg; }
     .hero__card img { width: 100%; height: 100%; object-fit: cover; }
     .foco-alto { object-position: 50% 20%; }
     .hero__card figcaption {
       position: absolute; left: 8px; right: 8px; bottom: 8px; padding: 5px 8px;
       font-size: .625rem; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; line-height: 1.3;
-      color: var(--ouro-claro); background: rgba(10, 10, 11, .74); border: 1px solid var(--fio); border-radius: 3px;
+      color: var(--ouro-claro); background: rgba(10, 10, 11, .74); border: 1px solid var(--fio); border-radius: 10px; text-align: center;
     }
 
     /* Faixa de diferenciais na base da capa */
@@ -413,7 +419,7 @@
     .servicos__mais { margin-top: 36px; text-align: center; }
 
     /* ---------- 6.2 Sobre: frase da Jully + promessas ---------- */
-    .sobre__painel { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); }
+    .sobre__painel { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); border-radius: var(--raio-g); overflow: hidden; }
     .sobre__frase { position: relative; padding: clamp(32px, 4vw, 56px); }
     .sobre__aspas { display: block; width: 40px; height: 32px; color: var(--ouro); margin-bottom: 18px; }
     .sobre__frase blockquote p { font-size: clamp(1.1875rem, 1rem + .6vw, 1.4375rem); font-weight: 300; line-height: 1.5; }
@@ -446,6 +452,7 @@
     .incluso {
       display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); align-items: center; gap: 0 clamp(24px, 4vw, 56px);
       padding: clamp(36px, 5vw, 64px) clamp(24px, 5vw, 64px);
+      border-radius: var(--raio-g);
     }
     .incluso .titulo { grid-column: 1 / -1; font-size: clamp(1.5rem, 1.1rem + 1.3vw, 2.25rem); margin-bottom: clamp(16px, 2vw, 24px); text-align: center; }
     .incluso__lista { display: grid; grid-template-columns: repeat(2, 1fr); gap: 32px clamp(24px, 3vw, 40px); }
@@ -454,29 +461,36 @@
     .camadas { position: relative; height: clamp(300px, 32vw, 420px); perspective: 1500px; --abre: .6; }
     .camadas__palco {
       position: absolute; left: 50%; top: 54%; width: min(280px, 74%); aspect-ratio: 3 / 2;
-      transform-style: preserve-3d; transform: translate(-50%, -50%) rotateX(56deg) rotateZ(-38deg);
+      transform-style: preserve-3d;
+      transform: translate(-50%, -50%) rotateX(calc(56deg + var(--ty, 0deg))) rotateZ(calc(-38deg + var(--tz, 0deg)));
+      transition: transform .9s var(--ease-out);
     }
     .camada {
       position: absolute; inset: 0;
       display: flex; align-items: flex-end; justify-content: space-between; gap: 10px;
       padding: 14px 16px;
-      border: 1px solid var(--fio); border-radius: 8px;
+      border: 1px solid var(--fio); border-radius: 18px;
       background: linear-gradient(140deg, rgba(42, 39, 37, .95), rgba(18, 17, 19, .95));
       box-shadow: 0 24px 40px -18px rgba(0, 0, 0, .85);
       font-size: .6875rem; font-weight: 500; letter-spacing: .18em; text-transform: uppercase; line-height: 1.2; color: var(--ouro);
-      translate: 0 0 calc(var(--n) * (12px + var(--abre) * 58px));
+      translate: var(--fx, 0%) 0 calc(var(--n) * (12px + var(--abre) * var(--passo, 58px)) + var(--fz, 0px));
+      transition: translate .7s var(--ease-out), border-color .5s, box-shadow .5s, background .5s;
+      cursor: pointer;
     }
     .camada .icone { width: 26px; height: 26px; }
     .camada:nth-child(1) { --n: 0; }
     .camada:nth-child(2) { --n: 1; }
     .camada:nth-child(3) { --n: 2; }
     .camada:nth-child(4) { --n: 3; }
-    .camada--topo {
-      flex-direction: column; align-items: center; justify-content: center; gap: 12px;
+    /* Baralho: a carta que sai desliza para o lado (--fx), troca de altura e volta */
+    .camada.fora { --fx: 84%; --fz: 34px; }
+    .camada.no-topo {
       border-color: var(--fio-forte);
-      background: linear-gradient(140deg, rgba(66, 55, 40, .96), rgba(24, 21, 18, .96));
+      background: linear-gradient(140deg, rgba(70, 57, 40, .97), rgba(26, 22, 18, .97));
+      box-shadow: 0 30px 50px -18px rgba(0, 0, 0, .9);
     }
-    .camada--topo img { width: 64%; }
+    .camada img { width: 76px; }
+    .camadas__dica { position: absolute; left: 0; right: 0; bottom: 4px; text-align: center; }
     .incluso__lista li { display: flex; gap: 16px; }
     .incluso__lista .icone { width: 30px; height: 30px; margin-top: 1px; }
     .incluso__lista h3 { font-size: 1rem; font-weight: 500; line-height: 1.4; }
@@ -553,7 +567,9 @@
     /* a foto dos cachos tem um pedaço da placa antiga no alto: amplia por dentro da moldura e corta */
     .vitrine__a img { transform: scale(1.3); transform-origin: 50% 100%; }
     .vitrine__a { left: 0; bottom: 8%; width: 35%; aspect-ratio: 4 / 5; }
-    .vitrine__b { left: 29%; bottom: 0; width: 42%; aspect-ratio: 4 / 5.2; z-index: 2; }
+    /* foto do meio em arco: um toque de salão, sem exagero */
+    .vitrine__b { left: 29%; bottom: 0; width: 42%; aspect-ratio: 4 / 5.4; z-index: 2; }
+    .vitrine .vitrine__b { border-radius: 999px 999px var(--raio) var(--raio); }
     .vitrine__c { right: 0; bottom: 14%; width: 35%; aspect-ratio: 4 / 5; }
     .final__texto .titulo { text-align: left; }
     .final__texto > p { margin-top: 20px; max-width: 30rem; color: var(--texto-2); }
@@ -657,8 +673,12 @@
       .para-voce__lista { grid-template-columns: repeat(2, 1fr); gap: 32px 40px; }
       .rodape__grade { grid-template-columns: 1fr 1fr; }
       .final__extras { grid-template-columns: 1fr; gap: 14px; }
+      .hero__jully { left: -12%; width: 76%; }
+      .hero__letreiro { left: 38%; width: 60%; }
       .incluso { grid-template-columns: 1fr; }
-      .camadas { height: clamp(260px, 46vw, 360px); }
+      .camadas { height: clamp(320px, 62vw, 400px); margin-bottom: 28px; --passo: 40px; }
+      .camadas__palco { top: 60%; width: min(250px, 68%); }
+      .camadas__dica { bottom: -18px; }
     }
 
     @media (max-width: 860px) {
@@ -686,11 +706,11 @@
       .hero { padding-top: var(--topo-h); }
       .hero__grade { grid-template-columns: 1fr; gap: 0; }
       .hero__cena { order: -1; margin-inline: calc(var(--gutter) * -1); aspect-ratio: 1 / .9; max-height: 560px; overflow: hidden; }
-      .hero__letreiro { left: 5%; top: 6%; width: 61%; }
-      .hero__luz { left: -10%; top: -6%; width: 100%; height: 70%; }
-      .hero__jully { right: -6%; top: 3%; width: 76%; --fade-ini: 62%; --fade-fim: 84%; }
-      .hero__aura { right: -14%; width: 80%; }
-      .hero__card--a { left: 5%; bottom: 11%; width: 21%; --z: 40px; }
+      .hero__letreiro { left: 42%; top: 7%; width: 54%; }
+      .hero__luz { left: 10%; top: -6%; width: 100%; height: 70%; }
+      .hero__jully { left: -11%; top: 3%; width: 74%; --fade-ini: 62%; --fade-fim: 84%; }
+      .hero__aura { left: -14%; width: 80%; }
+      .hero__card--a { right: 5%; bottom: 11%; width: 21%; --z: 40px; }
       .hero__card--b { display: none; }
       .hero__card figcaption { left: 5px; right: 5px; bottom: 5px; padding: 4px 5px; font-size: .625rem; letter-spacing: .08em; }
       .hero__texto { padding-block: 0 36px; }
@@ -973,8 +993,9 @@
               <div class="camada"><span>Diagnóstico</span><svg class="icone"><use href="#i-gota"/></svg></div>
               <div class="camada"><span>Cor sob medida</span><svg class="icone"><use href="#i-sol"/></svg></div>
               <div class="camada"><span>Tratamento</span><svg class="icone"><use href="#i-escudo"/></svg></div>
-              <div class="camada camada--topo"><img src="img/logo-letreiro.webp" width="520" height="152" alt="" loading="lazy" decoding="async"><span>Finalização</span></div>
+              <div class="camada"><span>Finalização</span><img src="img/logo-letreiro.webp" width="520" height="152" alt="" loading="lazy" decoding="async"></div>
             </div>
+            <p class="camadas__dica legenda">Toque num cartão para trazer para cima</p>
           </div>
           <ul class="incluso__lista">
             <li><svg class="icone" aria-hidden="true"><use href="#i-check"/></svg><div><h3>Avaliação do fio</h3><p>Antes de qualquer química, a Jully avalia o seu cabelo.</p></div></li>
@@ -1291,6 +1312,74 @@
       }
     }
 
+    /** Baralho das camadas do atendimento: a carta de cima desliza para o lado,
+        desce para a base e as outras sobem (troca sozinha a cada 3,2 s).
+        Mouse em cima: pausa e inclina a pilha. Clique/toque numa carta: ela vem para o topo. */
+    function iniciarBaralho() {
+      const caixa = document.querySelector('.camadas');
+      if (!caixa) return;
+      const cartas = [...caixa.querySelectorAll('.camada')];
+      let ordem = cartas.slice(); // ordem[0] = base … último = topo
+      const aplicar = () => ordem.forEach((c, i) => {
+        c.style.setProperty('--n', i);
+        c.classList.toggle('no-topo', i === ordem.length - 1);
+      });
+      aplicar();
+
+      if (PREFERE_MENOS_MOVIMENTO) { // sem animação: o clique só reordena
+        cartas.forEach((c) => c.addEventListener('click', () => { ordem = ordem.filter((x) => x !== c).concat(c); aplicar(); }));
+        return;
+      }
+
+      let ocupado = false, pedido = null, seguraAte = 0;
+      const trocar = (carta, destino) => {
+        if (ocupado) { pedido = carta; return; }           // clique no meio de uma troca: espera
+        ocupado = true;
+        carta.classList.add('fora');                       // 1. desliza para o lado
+        setTimeout(() => {
+          ordem = ordem.filter((x) => x !== carta);
+          ordem.splice(destino, 0, carta);
+          aplicar();                                       // 2. troca de altura; as outras sobem/descem
+          setTimeout(() => {
+            carta.classList.remove('fora');                // 3. volta para a pilha
+            setTimeout(() => {
+              ocupado = false;
+              if (pedido) { const c = pedido; pedido = null; if (ordem[ordem.length - 1] !== c) trocar(c, ordem.length - 1); }
+            }, 650);
+          }, 520);
+        }, 420);
+      };
+      const ciclo = () => { if (Date.now() > seguraAte) trocar(ordem[ordem.length - 1], 0); };
+
+      let relogio = null, naTela = false, pausado = false;
+      const agendar = () => {
+        clearInterval(relogio);
+        relogio = (naTela && !pausado && !document.hidden) ? setInterval(ciclo, 3200) : null;
+      };
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver(([e]) => { naTela = e.isIntersecting; agendar(); }, { threshold: .35 }).observe(caixa);
+      }
+      document.addEventListener('visibilitychange', agendar);
+
+      if (PONTEIRO_FINO) {
+        caixa.addEventListener('pointerenter', () => { pausado = true; agendar(); });
+        caixa.addEventListener('pointermove', (e) => {
+          const r = caixa.getBoundingClientRect();
+          caixa.style.setProperty('--tz', (((e.clientX - r.left) / r.width - .5) * 14).toFixed(2) + 'deg');
+          caixa.style.setProperty('--ty', ((.5 - (e.clientY - r.top) / r.height) * 10).toFixed(2) + 'deg');
+        });
+        caixa.addEventListener('pointerleave', () => {
+          pausado = false; agendar();
+          caixa.style.setProperty('--tz', '0deg');
+          caixa.style.setProperty('--ty', '0deg');
+        });
+      }
+      cartas.forEach((c) => c.addEventListener('click', () => {
+        seguraAte = Date.now() + 6000;                     // a carta escolhida fica um tempo em cima
+        if (ordem[ordem.length - 1] !== c) trocar(c, ordem.length - 1);
+      }));
+    }
+
     /** Cartões de serviço: inclinação leve e brilho que segue o mouse. */
     function inclinarCartoes() {
       if (PREFERE_MENOS_MOVIMENTO || !PONTEIRO_FINO) return;
@@ -1394,6 +1483,7 @@
     dividirTitulos();
     observarRevelacoes();
     iniciarProfundidade();
+    iniciarBaralho();
     inclinarCartoes();
     iniciarTopo();
     iniciarFAQ();
