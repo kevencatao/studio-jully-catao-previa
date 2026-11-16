@@ -265,7 +265,7 @@
     .hero__texto { align-self: center; padding-block: clamp(24px, 4vw, 48px) clamp(96px, 10vw, 140px); }
     .hero__titulo {
       font-weight: 300;
-      font-size: clamp(2.375rem, 1.35rem + 3.1vw, 4.125rem);
+      font-size: clamp(2.5rem, 1.3rem + 3.5vw, 4.5rem);
       line-height: 1.04;
       letter-spacing: .03em;
       text-transform: uppercase;
@@ -311,7 +311,7 @@
       pointer-events: none;
       --k: .4; --z: -60px; --ks: 40;
     }
-    .hero__letreiro { position: absolute; left: 0; top: 6%; width: 57%; --k: .35; --z: -40px; --ks: 55; }
+    .hero__letreiro { position: absolute; left: -1%; top: 3%; width: 69%; --k: .35; --z: -40px; --ks: 55; }
     .hero__letreiro img { width: 100%; filter: drop-shadow(0 6px 18px rgba(0, 0, 0, .45)); }
     /* Brilho que passa uma vez pelas letras (só aparece se o navegador aceitar máscara) */
     .hero__brilho {
@@ -332,9 +332,9 @@
       mask-image: linear-gradient(180deg, #000 var(--fade-ini), transparent var(--fade-fim));
     }
     /* Cartões flutuantes com trabalhos reais, à frente da Jully */
-    .hero__card { position: absolute; width: 21%; transform-style: preserve-3d; }
-    .hero__card--a { left: 3%; bottom: 14%; --k: 1.2; --z: 90px; --ks: -80; }
-    .hero__card--b { left: 31%; bottom: 17%; width: 15%; --k: 1.5; --z: 130px; --ks: -130; }
+    .hero__card { position: absolute; width: 25%; transform-style: preserve-3d; }
+    .hero__card--a { left: 2%; bottom: 12%; --k: 1.2; --z: 90px; --ks: -80; }
+    .hero__card--b { left: 30%; bottom: 15%; width: 19%; --k: 1.5; --z: 130px; --ks: -130; }
     .hero__card-in {
       position: relative; aspect-ratio: 4 / 5; overflow: hidden;
       border: 1px solid var(--fio-forte); border-radius: 16px;
@@ -702,11 +702,11 @@
       .hero { padding-top: var(--topo-h); }
       .hero__grade { grid-template-columns: 1fr; gap: 0; }
       .hero__cena { order: -1; margin-inline: calc(var(--gutter) * -1); aspect-ratio: 1 / .9; max-height: 560px; overflow: hidden; }
-      .hero__letreiro { left: 3%; top: 7%; width: 55%; }
+      .hero__letreiro { left: 1%; top: 6%; width: 62%; }
       .hero__luz { left: -10%; top: -6%; width: 100%; height: 70%; }
       .hero__jully { right: -24%; top: 3%; width: 70%; --fade-ini: 62%; --fade-fim: 84%; }
       .hero__aura { right: -14%; width: 80%; }
-      .hero__card--a { left: 5%; bottom: 11%; width: 21%; --z: 40px; }
+      .hero__card--a { left: 6%; bottom: 9%; width: 25%; --z: 40px; }
       .hero__card--b { display: none; }
       .hero__card figcaption { left: 5px; right: 5px; bottom: 5px; padding: 4px 5px; font-size: .625rem; letter-spacing: .08em; }
       .hero__texto { padding-block: 0 36px; }
@@ -742,11 +742,20 @@
 
     @media (min-width: 861px) and (max-width: 1100px) {
       .depoimentos__lista { grid-template-columns: 1fr; max-width: 640px; margin-inline: auto; }
-      .hero__jully { right: -15%; }               /* rosto e brinco não encostam na borda */
-      .hero__card--b { width: 18%; }
+      .hero__cena { aspect-ratio: .9 / 1; }        /* cena mais alta: começa junto com o título */
+      .hero__jully { right: -17%; width: 80%; }   /* rosto e brinco não encostam na borda */
+      .hero__letreiro { width: 58%; top: 6%; left: -2%; }
+      .hero__card { width: 27%; }
+      .hero__card--a { bottom: 17%; }
+      .hero__card--b { width: 21%; left: 31%; bottom: 20%; }
       .hero__card figcaption { left: 6px; right: 6px; bottom: 6px; padding: 4px 6px; letter-spacing: .08em; }
     }
     @media (min-width: 601px) and (max-width: 860px) {
+      /* tablet: a cena ocupa a largura toda (sem faixa vazia à direita) */
+      .hero__cena { aspect-ratio: auto; height: 560px; }
+      .hero__jully { width: 64%; right: -8%; --fade-ini: 50%; --fade-fim: 72%; }
+      .hero__letreiro { width: 54%; top: 8%; }
+      .hero__card--a { width: 22%; bottom: 8%; }
       .depoimentos__lista { grid-template-columns: 1fr; max-width: 640px; margin-inline: auto; }
     }
     @media (min-width: 1101px) { .flutuante { display: none; } }
